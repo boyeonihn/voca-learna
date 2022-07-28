@@ -1,0 +1,27 @@
+
+* {
+    font-family: 'Mochiy Pop One';
+}
+
+html {
+    background-color: #1a659e;
+}
+
+section {
+    background-color: #f7c59f; 
+}
+input, 
+label,
+button {
+    display: block;
+}
+
+h1 {
+    color: #ff6b35;
+}
+h2 {
+    color: #004e89;
+}
+li {
+    color: #f58a07;
+}

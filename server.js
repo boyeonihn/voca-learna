@@ -49,4 +49,19 @@ app.post('/addVocabList', (request, response) => {
 
 // UPDATE 
 
+// DELETE
+app.delete('/deleteVocabList', (request, response) => {
+    console.log(request)
+    db.collection('vocabWords').deleteOne({unit: request.body.unitNameSelect})
+    .then(result => {
+        console.log('List deleted')
+        response.json('List deleted')
+    })
+    .catch(error => console.error(error))
+
+})
+
+app.delete('/deleteSingleWord', (request, response) => {
+    console.log(request); 
+})
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`)); // set up our server - initialize 

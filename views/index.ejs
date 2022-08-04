@@ -28,9 +28,9 @@
         <section class="vocab">
             <form action="/addVocabList" method="POST" class="vocab-header">
                 <label for="unit">Enter "Unit" Name:</label>
-                <input type="text" name="unit" value="unit">
-                <label for="wordList">Enter Vocabulary Words:</label>
-                <textarea rows="6" cols="45" name="wordList">Vocabulary List</textarea>
+                <input type="text" name="unit" placeholder="Unit">
+                <label for="wordList">Enter Vocabulary Words: (Please enter one word per line)</label>
+                <textarea rows="6" cols="45" name="wordList" placeholder="Vocabulary List"></textarea>
                 <button type="submit"><span class="fas fa-plus"></span>Add Words to List</button> <!-- submit has a default button-->
             </form>
 
@@ -39,19 +39,24 @@
 
     <section class="vocab-container">
         <h2>Word List Inventory</h2>
-        <ul class="lists">
             <% for(let i=0; i < info.length; i++) {%>
-                <h3><%= info[i].unit %></h3>
+                <section class="vocab-list">
+                    <ul class="lists">
+                    <h3 class="unitTitle"><%= info[i].unit %></h3>
                     <% for (let j=0; j < info[i].wordList.length; j++) {%>
-                        <li><%= info[i].wordList[j]%></li>
+                        <li class="singleWord">
+                            <span class="word"><%= info[i].wordList[j]%></span>
+                            <span class="fa fa-pen"></span>
+                            <span class='fa fa-trash word-trash'></span>
+                        </li>
                     <% } %>
-                    <span class='fa fa-heart'></span>
-                    <span class="fa fa-pen"></span>
-                    <span class='fa fa-box'></span>
                     <span class='fa fa-trash'></span>
-                    
-                </li>
+                    <span class='fa fa-heart'></span>
+                    <span class='fa fa-box'></span>
+                    </ul>
+                </section>
             <% } %>
     </section>
+    <script src='js/main.js'></script>
 </body>
 </html>

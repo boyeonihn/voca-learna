@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voca Learna</title>
+    <!--GOOGLE FONT-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100&family=Mochiy+Pop+One&family=Poppins:wght@100;200;300;400&family=Raleway:wght@100;300&display=swap" rel="stylesheet">
+    <!--ICONS-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="/css/style.css" > <!-- don't need to specify public b/c you already did it on express --> 
+</head>
+<body>
+    <header>
+        <a href="/"><h1>Voca-Learna</h1></a>
+    </header>
+    <section class="list-creator">
+        <h2>Edit Word List</h2>
+        <section class="vocab">
+        </section>
+    </section>
+
+<section class="vocab-container">
+<form action="/edit/<%= info._id %>" method="POST">
+<input type="text" name="unit" value="<%=info.unit %>">
+<textarea name="wordList">
+<%_ for (let i = 0; i < info.wordList.length; i++) { _%>
+<%= info.wordList[i] -%> 
+<% }; -%>
+</textarea>
+</form>
+</ul>
+</section>
+
+    <footer>
+        Voca-Learna. Site created by <a href="https://boyeonihn.com">Bo Yeon Ihn </a>
+    </footer>
+    <script src='js/main.js'></script>
+</body>
+</html>
+
+            <!-- <% info.wordList.forEach( word => {%>
+                <%- word %>
+            <% }) %> -->

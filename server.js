@@ -37,7 +37,7 @@ app.get('/', (request, response) => {
 
 //POST METHOD
 app.post('/addVocabList', (request, response) => {
-    let wordSplit = request.body.wordList.split('\r\n') // splitting the 
+    let wordSplit = request.body.wordList.split('\r\n').map(n => n.trim()) // splitting the 
     db.collection('vocabWords').insertOne({unit: request.body.unit, wordList: wordSplit, date: Date.now()})
     .then(result => {
         console.log('Vocabulary List created')
@@ -48,11 +48,51 @@ app.post('/addVocabList', (request, response) => {
 
 
 // UPDATE 
+    // delete WORD within list
+app.put('/deleteSingleWord', (request, response) => {
+    console.log(request.body); 
+    db.collection('vocabWords').updateOne({unit: request.body.unitSelected},
+        { $pull: { wordList: request.body.wordSelected}})
+    .then(result => {
+        console.log('One word removed');
+        response.json('Word removed');
+    })
+    .catch(error => console.error(error))
+})
+
+    // update the actual word itself within the list
+app
+    .route("/edit/:id")
+    .get((request, response) => {
+        const id = request.params.id; 
+        db.collection('vocabWords').findOne({},
+            {
+            _id: id
+        })
+        .then(data => {
+            console.log(data)
+            response.render('edit.ejs', {info: data})
+        })
+        .catch (error => console.error(error))
+    })
+    .post((request, response) => {
+        const id = req.params.id;
+        db.collection('vocabWords').findOneAndUpdate(
+            {_id: id},
+            {
+                unit: req.body.unit,
+                wordList: req.body.wordList
+            },
+            error => {
+                if (error) return response.status(500).send(error); 
+            }
+        )
+    })
 
 // DELETE
 app.delete('/deleteVocabList', (request, response) => {
     console.log(request)
-    db.collection('vocabWords').deleteOne({unit: request.body.unitNameSelect})
+    db.collection('vocabWords').deleteOne({unit: request.body.unitNameSelect, wordList: request.body.wordListSelect})
     .then(result => {
         console.log('List deleted')
         response.json('List deleted')

@@ -20,7 +20,7 @@
 </head>
 <body>
     <header>
-        <h1>Voca-Learna</h1>
+        <a href="/"><h1>Voca-Learna</h1></a>
     </header>
     <section class="list-creator">
         <h2>Create Word List</h2>
@@ -37,26 +37,30 @@
         </section>
     </section>
 
-    <section class="vocab-container">
+    <section class="vocab-container"
         <h2>Word List Inventory</h2>
+        <section class="vocab-list">
             <% for(let i=0; i < info.length; i++) {%>
-                <section class="vocab-list">
                     <ul class="lists">
                     <h3 class="unitTitle"><%= info[i].unit %></h3>
                     <% for (let j=0; j < info[i].wordList.length; j++) {%>
                         <li class="singleWord">
                             <span class="word"><%= info[i].wordList[j]%></span>
-                            <span class="fa fa-pen"></span>
                             <span class='fa fa-trash word-trash'></span>
                         </li>
                     <% } %>
-                    <span class='fa fa-trash'></span>
+                    <a href="/edit/<%= info[i]._id %>" class="edit"><span class="fa fa-pen"></span></a>
+                    <span class='fa fa-trash list-trash'></span>
                     <span class='fa fa-heart'></span>
                     <span class='fa fa-box'></span>
                     </ul>
-                </section>
             <% } %>
+        </section>
     </section>
+
+    <footer>
+        Voca-Learna. Site created by <a href="https://boyeonihn.com">Bo Yeon Ihn </a>
+    </footer>
     <script src='js/main.js'></script>
 </body>
 </html>

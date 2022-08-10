@@ -9,15 +9,36 @@ html {
 
 section {
     background-color: #f7c59f; 
+    padding: 15px; 
+    border-radius: 15px;
+    margin: 20px 20px 0 20px; 
 }
+
+.vocab-list {
+    margin: 0px; 
+    display: flex; 
+    justify-content: space-evenly;  
+    flex-wrap: wrap; 
+}
+
+
+
 input, 
 label,
 button {
     display: block;
 }
 
+
+/* color and style */
+a {
+    color: 004e89;
+    text-decoration: none;
+}
+
 h1 {
     color: #ff6b35;
+    margin: 20px;
 }
 h2 {
     color: #004e89;
@@ -34,4 +55,26 @@ li > span {
 
 li > span + span {
     margin-left: 3px;
+}
+
+li.singleWord {
+    display: flex; 
+    justify-content: space-between; 
+}
+span.word {
+    margin-right: 10px; 
+}
+
+a {
+    color: #004e89; 
+}
+a:hover {
+    color: #ff6b35; 
+}
+.word-trash:hover {
+    color: #ff6b35; 
+}
+
+textarea{
+    text-align:left;
 }

@@ -5,6 +5,7 @@ const app = express();
 const PORT = 8500; 
 const MongoClient = require('mongodb').MongoClient; 
 require('dotenv').config();   // dot file for the server to access tokens and files
+const ObjectId = require('mongodb').ObjectId; 
 
 let db, 
     dbConnectionStr = process.env.DB_CONNECTION,
@@ -37,7 +38,7 @@ app.get('/', (request, response) => {
 
 //POST METHOD
 app.post('/addVocabList', (request, response) => {
-    let wordSplit = request.body.wordList.split('\r\n').map(n => n.trim()) // splitting the 
+    let wordSplit = request.body.wordList.split('\r\n').map(n => n.trim()).filter(n => n.length != 0); // splitting the 
     db.collection('vocabWords').insertOne({unit: request.body.unit, wordList: wordSplit, date: Date.now()})
     .then(result => {
         console.log('Vocabulary List created')
@@ -65,30 +66,29 @@ app
     .route("/edit/:id")
     .get((request, response) => {
         const id = request.params.id; 
-        db.collection('vocabWords').findOne({},
-            {
-            _id: id
-        })
+        db.collection('vocabWords').findOne({_id: ObjectId(id)})
         .then(data => {
-            console.log(data)
             response.render('edit.ejs', {info: data})
         })
         .catch (error => console.error(error))
     })
     .post((request, response) => {
-        const id = req.params.id;
+        const id = request.params.id;
+        wordSplit = request.body.wordList.split('\r\n').map(n => n.trim()).filter(n => n.length != 0);
         db.collection('vocabWords').findOneAndUpdate(
-            {_id: id},
-            {
-                unit: req.body.unit,
-                wordList: req.body.wordList
-            },
-            error => {
-                if (error) return response.status(500).send(error); 
+            {_id: ObjectId(id)},
+            { $set: {
+                unit: request.body.unit,
+                wordList: wordSplit}
             }
         )
+        .then(result => {
+            console.log('Vocabulary List updated')
+            response.redirect('/')
+        })
+        .catch(error => console.error(error))
     })
-
+    
 // DELETE
 app.delete('/deleteVocabList', (request, response) => {
     console.log(request)
@@ -98,7 +98,6 @@ app.delete('/deleteVocabList', (request, response) => {
         response.json('List deleted')
     })
     .catch(error => console.error(error))
-
 })
 
 app.delete('/deleteSingleWord', (request, response) => {

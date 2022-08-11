@@ -24,20 +24,21 @@
     </header>
     <section class="list-creator">
         <h2>Edit Word List</h2>
-        <section class="vocab">
-        </section>
+        <p>Please enter one word per line</p>
     </section>
 
 <section class="vocab-container">
-<form action="/edit/<%= info._id %>" method="POST">
-<input type="text" name="unit" value="<%=info.unit %>">
-<textarea name="wordList">
+    <form action="/edit/<%= info._id %>" method="POST">
+        <input type="text" name="unit" id="unitEdit" value="<%=info.unit %>">
+            <textarea rows="6" cols="45" name="wordList">
 <%_ for (let i = 0; i < info.wordList.length; i++) { _%>
-<%= info.wordList[i] -%> 
-<% }; -%>
+<%= info.wordList[i]-%> 
+<%_ }; -%>
 </textarea>
-</form>
-</ul>
+            <button type="submit" class="confirm">Confirm</button>
+            <a href="/" class="cancel">Cancel</a>
+        </form>
+    </ul>
 </section>
 
     <footer>
@@ -46,7 +47,3 @@
     <script src='js/main.js'></script>
 </body>
 </html>
-
-            <!-- <% info.wordList.forEach( word => {%>
-                <%- word %>
-            <% }) %> -->

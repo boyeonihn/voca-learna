@@ -43,8 +43,6 @@ Array.from(removeWord).forEach((element) =>{
 async function deleteVocabList(){
     const unitName = this.parentNode.childNodes[1].innerText;
     const wordList = this.parentNode.childNodes[3].innerText;
-    console.log(unitName);
-    console.log(wordList); 
 
     try{
         const response = await fetch('deleteVocabList', {

@@ -28,6 +28,16 @@ app.use(express.urlencoded({extended: true})); // url parser - help validate the
 app.use(express.json());
 app.use(logger('dev')); 
 
+// Sessions
+app.use(
+    session({
+      secret: 'keyboard cat',
+      resave: false,
+      saveUninitialized: false,
+      store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    })
+  )
+  
 //GET METHOD 
 app.get('/', (request, response) => {
     db.collection('vocabWords').find().toArray()

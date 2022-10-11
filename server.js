@@ -2,21 +2,23 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express(); 
-const PORT = 8500; 
-const MongoClient = require('mongodb').MongoClient; 
-require('dotenv').config();   // dot file for the server to access tokens and files
+const mongoose = require('mongoose'); 
+const passport = require('passport'); 
+const session = require('express-session'); 
+const MongoStore = require('connect-mongo')(session); 
+const flash = require('express-flash');
+const logger = require('morgan'); 
+
+// routes 
+const mainRoutes = require('./routes/main'); 
+const todoRoutes = require('./routes/todos');
+const connectDB = require('./config/database'); 
+require('dotenv').config({path: './config/.env'});   // dot file for the server to access tokens and files
 const ObjectId = require('mongodb').ObjectId; 
 
-let db, 
-    dbConnectionStr = process.env.DB_CONNECTION,
-    dbName = 'voca-learna'
-
-//connect to mongodb
-MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
-    .then(client => {
-        console.log(`Connected to ${dbName} Database`)
-        db = client.db(dbName)
-    })
+// Passport config
+require('./config/passport')(passport); 
+connectDB(); 
 
 // set middleware
 app.set("view engine", "ejs"); // set up ejs
@@ -24,7 +26,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: true})); // url parser - help validate the information that we are passing back and forth
 // extended true allows us to pass arrays 
 app.use(express.json());
-
+app.use(logger('dev')); 
 
 //GET METHOD 
 app.get('/', (request, response) => {
@@ -103,4 +105,6 @@ app.delete('/deleteVocabList', (request, response) => {
 app.delete('/deleteSingleWord', (request, response) => {
     console.log(request); 
 })
-app.listen(PORT, () => console.log(`Server is running on ${PORT}`)); // set up our server - initialize 
+app.listen(process.env.PORT, ()=>{
+    console.log('Server is running, you better catch it!')
+})     // set up our server - initialize 

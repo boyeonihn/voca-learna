@@ -39,9 +39,14 @@ app.use(
   )
 
 // Passport middleware
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use(flash()); 
+
+// adding Routes for MVC structure 
+app.use('/', mainRoutes)
+app.use('/vocablists', vocablistRoutes)
 
 //GET METHOD 
 app.get('/', (request, response) => {

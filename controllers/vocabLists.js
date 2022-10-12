@@ -1,7 +1,5 @@
 const VocabList = require('../models/VocabList')
 
-
-
 module.exports = {
     getVocabLists: async (req,res)=>{
         console.log(req.user)
@@ -14,7 +12,8 @@ module.exports = {
     },
     createVocabList: async (req, res)=>{
         try{
-            await VocabList.create({todo: req.body.todoItem, completed: false, userId: req.user.id})
+            let wordArray = req.body.wordList.split('\r\n').map(n => n.trim()).filter(n => n.length != 0); // splitting the input words into array
+            await VocabList.create({unit: request.body.unit, wordList: wordArray, userId: req.user.id})
             console.log('Vocab List has been added!')
             res.redirect('/vocablists')
         }catch(err){
@@ -23,7 +22,8 @@ module.exports = {
     },
     editVocabList: async (req, res)=>{
         try{
-            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
+            console.log(req.body.todoIdFromJSFile);
+            await VocabList.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
                 completed: true
             })
             console.log('Marked Complete')
@@ -36,7 +36,7 @@ module.exports = {
         console.log(req.body.todoIdFromJSFile)
         try{
             await Todo.findOneAndDelete({_id:req.body.todoIdFromJSFile})
-            console.log('Deleted Todo')
+            console.log('Deleted Vocab List')
             res.json('Deleted It')
         }catch(err){
             console.log(err)
@@ -48,16 +48,7 @@ module.exports = {
 /* 
 
 
-//POST METHOD
-app.post('/addVocabList', (request, response) => {
-    let wordSplit = request.body.wordList.split('\r\n').map(n => n.trim()).filter(n => n.length != 0); // splitting the 
-    db.collection('vocabWords').insertOne({unit: request.body.unit, wordList: wordSplit, date: Date.now()})
-    .then(result => {
-        console.log('Vocabulary List created')
-        response.redirect('/')
-    })
-    .catch(error => console.error(error))
-}) // listening on default path 
+
 
 
 // UPDATE 

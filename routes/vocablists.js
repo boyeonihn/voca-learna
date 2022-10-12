@@ -7,9 +7,7 @@ router.get('/', ensureAuth, vocabListsController.getVocabLists)
 
 router.post('/createVocabList', vocabListsController.createVocabList)
 
-router.put('/markComplete', vocabListsController.markComplete)
-
-router.put('/markIncomplete', vocabListsController.markIncomplete)
+router.put('/editVocabList', vocabListsController.editVocabList)
 
 router.delete('/deleteVocabList', vocabListsController.deleteVocabList)
 

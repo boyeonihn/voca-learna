@@ -35,7 +35,8 @@ module.exports = {
     deleteVocabList: async (req, res)=>{
         console.log(req.body.todoIdFromJSFile)
         try{
-            await Todo.findOneAndDelete({_id:req.body.todoIdFromJSFile})
+            await VocabList.findOneAndDelete({_id:req.body.todoIdFromJSFile})
+            // previous parameter was : {unit: request.body.unitNameSelect, wordList: request.body.wordListSelect}
             console.log('Deleted Vocab List')
             res.json('Deleted It')
         }catch(err){
@@ -44,7 +45,20 @@ module.exports = {
     }
 }    
 
+// DELETE
+app.delete('/deleteVocabList', (request, response) => {
+    console.log(request)
+    db.collection('vocabWords').deleteOne()
+    .then(result => {
+        console.log('List deleted')
+        response.json('List deleted')
+    })
+    .catch(error => console.error(error))
+})
 
+app.delete('/deleteSingleWord', (request, response) => {
+    console.log(request); 
+})
 /* 
 
 
@@ -92,19 +106,6 @@ app
         .catch(error => console.error(error))
     })
     
-// DELETE
-app.delete('/deleteVocabList', (request, response) => {
-    console.log(request)
-    db.collection('vocabWords').deleteOne({unit: request.body.unitNameSelect, wordList: request.body.wordListSelect})
-    .then(result => {
-        console.log('List deleted')
-        response.json('List deleted')
-    })
-    .catch(error => console.error(error))
-})
 
-app.delete('/deleteSingleWord', (request, response) => {
-    console.log(request); 
-})
 
 */ 

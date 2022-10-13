@@ -20,7 +20,7 @@ module.exports = {
             console.log(err)
         }
     },
-    editVocabList: async (req, res)=>{
+    deleteOneWord: async (req, res)=>{
         try{
             console.log(req.body.todoIdFromJSFile);
             await VocabList.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
@@ -45,20 +45,6 @@ module.exports = {
     }
 }    
 
-// DELETE
-app.delete('/deleteVocabList', (request, response) => {
-    console.log(request)
-    db.collection('vocabWords').deleteOne()
-    .then(result => {
-        console.log('List deleted')
-        response.json('List deleted')
-    })
-    .catch(error => console.error(error))
-})
-
-app.delete('/deleteSingleWord', (request, response) => {
-    console.log(request); 
-})
 /* 
 
 
@@ -105,7 +91,4 @@ app
         })
         .catch(error => console.error(error))
     })
-    
-
-
 */ 

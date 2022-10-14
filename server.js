@@ -11,7 +11,7 @@ const logger = require('morgan');
 
 // routes 
 const mainRoutes = require('./routes/main'); 
-// const vocabListRoutes = require('./routes/vocablists'); 
+const vocabListRoutes = require('./routes/vocablists');
 
 
 const connectDB = require('./config/database'); 
@@ -20,7 +20,7 @@ require('dotenv').config({path: './config/.env'});   // dot file for the server 
 // Passport config
 require('./config/passport')(passport); 
 
-connectDB()
+connectDB(); 
 
 // set middleware
 app.set("view engine", "ejs"); // set up ejs
@@ -51,7 +51,7 @@ app.use(flash());
 
 // adding Routes for MVC structure 
 app.use('/', mainRoutes)
-// app.use('/vocablists', vocablistRoutes) 
+app.use('/vocablists', vocabListRoutes) 
 
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!')

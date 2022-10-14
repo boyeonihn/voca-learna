@@ -5,15 +5,16 @@ module.exports = {
         console.log(req.user)
         try{
             const vocabLists = await VocabList.find({userId:req.user.id}); 
-            res.render('vocablists.ejs', {vocablists: vocabLists, user: req.user})
+            res.render('profile.ejs', {vocablists: vocabLists, user: req.user})
         }catch(err){
             console.log(err)
         }
     },
     createVocabList: async (req, res)=>{
         try{
+            console.log(`this is the request ${req.body}`); 
             let wordArray = req.body.wordList.split('\r\n').map(n => n.trim()).filter(n => n.length != 0); // splitting the input words into array
-            await VocabList.create({unit: request.body.unit, wordList: wordArray, userId: req.user.id})
+            await VocabList.create({unit: req.body.unit, wordList: wordArray, userId: req.user.id})
             console.log('Vocab List has been added!')
             res.redirect('/vocablists')
         }catch(err){
